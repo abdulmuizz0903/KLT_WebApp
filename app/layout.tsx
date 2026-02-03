@@ -10,8 +10,23 @@ const nastaliq = Noto_Nastaliq_Urdu({
 });
 
 export const metadata: Metadata = {
-  title: "Kashmiri AI Translator",
-  description: "English to Kashmiri Translation & TTS",
+  title: "Kashmiri AI Translator and Audio Generator | Gaash Lab",
+  description: "Experience state-of-the-art English to Kashmiri translation and natural-sounding audio generation. Developed at Gaash Lab, this tool offers precise neural machine translation and high-quality Text-to-Speech (TTS).",
+  keywords: ["Kashmiri AI", "English to Kashmiri", "Translator", "Audio Generator", "TTS", "Gaash Lab", "Machine Translation", "Kashmir", "Language Tool"],
+  authors: [{ name: "Gaash Lab" }],
+  creator: "Gaash Lab",
+  openGraph: {
+    title: "Kashmiri AI Translator and Audio Generator",
+    description: "Convert English text to Kashmiri with high accuracy and generate natural speech audio.",
+    type: "website",
+    locale: "en_US",
+    siteName: "Kashmiri AI Translator",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kashmiri AI Translator | Gaash Lab",
+    description: "Seamless English to Kashmiri translation and audio generation.",
+  },
 };
 
 export default function RootLayout({

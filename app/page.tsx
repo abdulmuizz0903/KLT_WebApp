@@ -151,7 +151,7 @@ export default function Home() {
 
       {/* Header */}
       <div className="mb-8 text-center relative w-full max-w-xl mx-auto">
-        <div className="flex items-center justify-center gap-3 mb-4">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-3 mb-2">
           <Image 
             src={logo} 
             alt="Kashmiri AI Logo" 
@@ -159,9 +159,9 @@ export default function Home() {
             height={60} 
             className="w-16 h-16 object-contain drop-shadow-sm" 
           />
-          <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Kashmiri Translation | Gaash Lab</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight text-center">Kashmiri AI Translator and Audio Generator</h1>
         </div>
-        <p className="text-gray-500">Kashmiri Neural Machine Translation & TTS</p>
+        <p className="text-gray-500 font-medium">Developed at Gaash Lab</p>
       </div>
 
       {/* Main Card */}

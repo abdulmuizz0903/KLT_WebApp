@@ -131,8 +131,8 @@ export default function Home() {
                <div className="flex gap-4 items-start text-left">
                  <div className="min-w-[4px] h-full bg-indigo-100 rounded-full mt-1"></div>
                 <div>
-                  <p className="font-medium text-gray-900 mb-1">Audio</p>
-                  <p className="leading-relaxed">Click the speaker icon after translation to hear the result.</p>
+                  <p className="font-medium text-gray-900 mb-1">Audio & Voices</p>
+                  <p className="leading-relaxed">Click the speaker icon to listen. If the voice sounds unnatural or not good enough, click <strong>Translate</strong> again to generate a new variation.</p>
                 </div>
               </div>
             </div>

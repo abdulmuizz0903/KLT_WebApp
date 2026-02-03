@@ -124,7 +124,7 @@ export default function Home() {
                  <div className="min-w-[4px] h-full bg-indigo-100 rounded-full mt-1"></div>
                 <div>
                   <p className="font-medium text-gray-900 mb-1">Best Performance</p>
-                  <p className="leading-relaxed">Although the system is flexible, this model works best for <strong>English-Urdu</strong> translation tasks.</p>
+                  <p className="leading-relaxed">Although the system is flexible, this model works best for <strong>English-Kashmiri</strong> translation tasks.</p>
                 </div>
               </div>
 

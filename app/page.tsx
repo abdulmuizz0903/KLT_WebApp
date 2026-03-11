@@ -19,6 +19,8 @@ export default function Home() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showInfo, setShowInfo] = useState(false);
+  const [spkVoice, setSpkVoice] = useState<"Male" | "Female">("Male");
+  const [quality, setQuality] = useState<"Low (fast)" | "Medium" | "High (slow)">("Low (fast)");
   
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -38,7 +40,8 @@ export default function Home() {
       const result = await app.predict("/pipeline", { 		
         text: inputText, 
         is_eng: isEnglish, 
-        spk_id: Math.floor(Math.random() * 420) + 1, 
+        spk_voice: spkVoice,
+        quality: quality,
       }) as { data: [string, any] };
 
       // Handle translation text (data[0])
@@ -132,7 +135,15 @@ export default function Home() {
                  <div className="min-w-[4px] h-full bg-indigo-100 rounded-full mt-1"></div>
                 <div>
                   <p className="font-medium text-gray-900 mb-1">Audio & Voices</p>
-                  <p className="leading-relaxed">Click the speaker icon to listen. If the voice sounds unnatural or not good enough, click <strong>Translate</strong> again to generate a new variation.</p>
+                  <p className="leading-relaxed">Choose a <strong>Male</strong> or <strong>Female</strong> speaker voice before translating. Click the speaker icon to listen to the generated audio.</p>
+                </div>
+              </div>
+
+              <div className="flex gap-4 items-start text-left">
+                 <div className="min-w-[4px] h-full bg-indigo-100 rounded-full mt-1"></div>
+                <div>
+                  <p className="font-medium text-gray-900 mb-1">Quality</p>
+                  <p className="leading-relaxed">Select <strong>Low (fast)</strong> for quick results or <strong>High (slow)</strong> for better audio quality.</p>
                 </div>
               </div>
             </div>
@@ -199,6 +210,46 @@ export default function Home() {
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
           />
+
+          {/* Controls: Speaker Voice & Quality */}
+          <div className="mt-4 flex flex-col sm:flex-row gap-4">
+            <div className="flex-1">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Speaker Voice</p>
+              <div className="flex gap-2">
+                {(["Male", "Female"] as const).map((voice) => (
+                  <button
+                    key={voice}
+                    onClick={() => setSpkVoice(voice)}
+                    className={`flex-1 py-1.5 rounded-full text-sm font-medium border transition-all
+                      ${spkVoice === voice
+                        ? "bg-indigo-600 text-white border-indigo-600 shadow-sm"
+                        : "bg-white text-gray-500 border-gray-200 hover:border-indigo-400 hover:text-indigo-600"
+                      }`}
+                  >
+                    {voice}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="flex-1">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Quality</p>
+              <div className="flex gap-2">
+                {(["Low (fast)", "Medium", "High (slow)"] as const).map((q) => (
+                  <button
+                    key={q}
+                    onClick={() => setQuality(q)}
+                    className={`flex-1 py-1.5 rounded-full text-xs font-medium border transition-all
+                      ${quality === q
+                        ? "bg-indigo-600 text-white border-indigo-600 shadow-sm"
+                        : "bg-white text-gray-500 border-gray-200 hover:border-indigo-400 hover:text-indigo-600"
+                      }`}
+                  >
+                    {q}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
 
           <div className="mt-6 flex justify-between items-center bg-white">
             <div className="text-xs text-gray-400">

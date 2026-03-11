@@ -214,12 +214,13 @@ export default function Home() {
           {/* Controls: Speaker Voice & Quality */}
           <div className="mt-4 flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Speaker Voice</p>
-              <div className="flex gap-2">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2" id="spk-voice-label">Speaker Voice</p>
+              <div className="flex gap-2" role="group" aria-labelledby="spk-voice-label">
                 {(["Male", "Female"] as const).map((voice) => (
                   <button
                     key={voice}
                     onClick={() => setSpkVoice(voice)}
+                    aria-pressed={spkVoice === voice}
                     className={`flex-1 py-1.5 rounded-full text-sm font-medium border transition-all
                       ${spkVoice === voice
                         ? "bg-indigo-600 text-white border-indigo-600 shadow-sm"
@@ -232,12 +233,13 @@ export default function Home() {
               </div>
             </div>
             <div className="flex-1">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Quality</p>
-              <div className="flex gap-2">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2" id="quality-label">Quality</p>
+              <div className="flex gap-2" role="group" aria-labelledby="quality-label">
                 {(["Low (fast)", "Medium", "High (slow)"] as const).map((q) => (
                   <button
                     key={q}
                     onClick={() => setQuality(q)}
+                    aria-pressed={quality === q}
                     className={`flex-1 py-1.5 rounded-full text-xs font-medium border transition-all
                       ${quality === q
                         ? "bg-indigo-600 text-white border-indigo-600 shadow-sm"

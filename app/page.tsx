@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { Client } from "@gradio/client";
 import { ArrowRightLeft, Volume2, Play, Pause, Loader2, Info, X } from "lucide-react";
@@ -21,14 +21,34 @@ export default function Home() {
   const [showInfo, setShowInfo] = useState(false);
   
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const objectUrlRef = useRef<string | null>(null);
+
+  // Revoke any previously created object URLs to avoid memory leaks
+  const revokeObjectUrl = () => {
+    if (objectUrlRef.current) {
+      URL.revokeObjectURL(objectUrlRef.current);
+      objectUrlRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      revokeObjectUrl();
+    };
+  }, []);
 
   const handleTranslate = async () => {
     if (!inputText.trim()) return;
 
     setIsLoading(true);
     setError(null);
+    revokeObjectUrl();
     setAudioUrl(null);
     setTranslatedText("");
+    setIsPlaying(false);
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
 
     try {
       // Connect to the HF Space
@@ -38,7 +58,7 @@ export default function Home() {
       const result = await app.predict("/pipeline", { 		
         text: inputText, 
         is_eng: isEnglish, 
-        spk_id: Math.floor(Math.random() * 420) + 1, 
+        spk_id: Math.floor(Math.random() * 500) + 1, 
       }) as { data: [string, any] };
 
       // Handle translation text (data[0])
@@ -47,12 +67,17 @@ export default function Home() {
       }
 
       // Handle audio (data[1])
+      // Gradio 5.x returns a FileData object: { url, path, blob, ... }
       if (result.data && result.data[1]) {
-        // The audio object from Gradio client usually contains a 'url' property
-        // or sometimes we might need to construct it if it's returning a different structure
         const audioData = result.data[1];
         if (audioData.url) {
+          // Prefer the direct URL when available (Gradio 5.x FileData)
           setAudioUrl(audioData.url);
+        } else if (audioData.blob instanceof Blob) {
+          // Fallback: create an object URL from the blob data
+          const objectUrl = URL.createObjectURL(audioData.blob);
+          objectUrlRef.current = objectUrl;
+          setAudioUrl(objectUrl);
         }
       }
     } catch (err: any) {
